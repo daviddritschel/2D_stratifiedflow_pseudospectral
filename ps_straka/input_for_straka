@@ -1,0 +1,5 @@
+      0.0 ! centre in x of the elliptical cold bubble (km)
+      3.0 ! centre in y "   "      "       "     "     "  
+      4.0 ! semi-major axis of the cold bubble (km)
+      2.0 ! semi-minor axis "   "   "     "     "  
+     15.0 ! maximum temperature perturbation
