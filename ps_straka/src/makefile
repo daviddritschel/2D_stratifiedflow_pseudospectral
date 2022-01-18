@@ -5,12 +5,12 @@ installdir = ..
 
  # Set main source and object files:
 sources = $(sourcedir)/parameters.f90 $(sourcedir)/constants.f90 $(sourcedir)/spectral.f90 #Main f90 sources
-objects = parameters.o constants.o spectral.o #Main .o files 
+objects = parameters.o constants.o spectral.o #Main .o files
 
  # Set location of fft library:
-fft_lib = ~/hydra/lib/stafft/stafft.f90 ~/hydra/lib/stafft/sta2dfft.f90 
+fft_lib = stafft/stafft.f90 stafft/sta2dfft.f90
 
- # Set flag options: 
+ # Set flag options:
 norm_flags = -O3 -mcmodel=medium #Compiler flags
 test_flags = -O3 -mcmodel=medium -fbounds-check -fbacktrace  #Compiler flags
 
@@ -25,7 +25,7 @@ all: strat setup proxy_init_all install
 strat: $(objects) $(fft_lib) $(sourcedir)/strat.f90
 	$(f90) $(fft_lib) $(objects) $(sourcedir)/strat.f90 -o strat $(flags)
 
-$(objects): $(fft_lib) $(sources) 
+$(objects): $(fft_lib) $(sources)
 	$(f90) $(fft_lib) $(sources) -c $(flags)
 
 .PHONY: clean setup install
@@ -37,7 +37,7 @@ setup:
 install:
 	find -type f -perm /a+x -exec /bin/mv {} $(installdir)/ \;
 
- # Include intialisation and post-processing rules 
+ # Include intialisation and post-processing rules
  # if these exist:
 -include init/init.make
 
@@ -45,8 +45,8 @@ install:
  # also gets built:
 ifdef init_exists
 proxy_init_all: init_all
-else 
+else
 proxy_init_all:
-	 @echo No init directory found 
+	 @echo No init directory found
 endif
 
