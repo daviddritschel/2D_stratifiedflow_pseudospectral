@@ -13,10 +13,11 @@ fft_lib = stafft/stafft.f90 stafft/sta2dfft.f90
  # Set flag options:
 norm_flags = -O3 -mcmodel=medium #Compiler flags
 test_flags = -O3 -mcmodel=medium -fbounds-check -fbacktrace  #Compiler flags
+epic_flags = -O3 -fdefault-real-8 -fdefault-double-8 -fPIC -funroll-all-loops -flto
 
  # Set compiler and flag used:
 f90=gfortran
-flags=$(norm_flags)
+flags=$(epic_flags)
 
 #----------------------------------------------------------------------
  # Rules:
