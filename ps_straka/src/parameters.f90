@@ -4,7 +4,7 @@ module parameters
 ! the suite of ps f90 files.
 
  !Domain grid dimensions:
-integer,parameter:: nx=2048,ny=256
+integer,parameter:: nx=512, ny=64
 
  !Domain width in x and limits in y:
 double precision,parameter:: ellx=51200d0

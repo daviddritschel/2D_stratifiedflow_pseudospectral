@@ -136,10 +136,10 @@ open(22,file='evolution/monitor.asc',status='replace')
 open(23,file='evolution/vorticity.asc',status='replace')
 
  !Open files to save vorticity and buoyancy fields periodically:
-open(31,file='evolution/zz.r4',form='unformatted',access='direct', &
-                 & status='replace',recl=nbytes)
-open(32,file='evolution/bb.r4',form='unformatted',access='direct', &
-                 & status='replace',recl=nbytes)
+open(31,file='evolution/zz.r8',form='unformatted',access='direct', &
+                 & status='replace',recl=2*nbytes)
+open(32,file='evolution/bb.r8',form='unformatted',access='direct', &
+                 & status='replace',recl=2*nbytes)
 
  !Open file for 1d vorticity & buoyancy spectra:
 open(51,file='spectra/zspec.asc',status='replace') ! zeta
