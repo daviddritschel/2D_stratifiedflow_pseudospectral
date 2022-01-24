@@ -6,7 +6,7 @@
 !       Code adapted from ~/hydra/ps/plane/sw/caps codes in January 2020
 !       by D G Dritschel @ St Andrews.
 
-!       This code solves: 
+!       This code solves:
 !            zeta_t + (u,v)*grad(zeta) = db/dx + D[zeta]
 !               b_t + (u,v)*grad(b) = D[b]
 !               u_x + v_y = 0
@@ -63,7 +63,7 @@ do while (t < tsim)
 
    !Advect flow from time t to t + dt:
   call advance
-  
+
 enddo
 !End of time loop
 !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -89,7 +89,7 @@ contains
 subroutine initialise
 
 ! Routine initialises fixed constants and arrays, and reads in
-! input files, opens output files ready for writing to. 
+! input files, opens output files ready for writing to.
 
 implicit none
 
@@ -158,7 +158,7 @@ end subroutine initialise
 
 subroutine advance
 
-! Advances fields from time t to t+dt using an iterative implicit 
+! Advances fields from time t to t+dt using an iterative implicit
 ! trapezoidal method of the form
 !
 !     (F^{n+1}-F^n)/dt = (L^{n+1}+L^n)/2 + (S^{n+1}+S^n)/2
@@ -235,7 +235,7 @@ subroutine source(sbs,szs)
 ! Gets the source terms for vorticity and buoyancy in spectral space.
 
 ! The spectral fields bs and zs are all spectrally truncated.
-! Note, uu and vv obtained by main_invert before calling this 
+! Note, uu and vv obtained by main_invert before calling this
 ! routine are spectrally truncated as well.
 
 implicit none
@@ -474,8 +474,8 @@ enddo
 
 !---------------------------------------------------------------
  !Write vorticity and buoyancy fields:
-write(31,rec=igrids) real(t),real(zz)
-write(32,rec=igrids) real(t),real(bb)
+write(31,rec=igrids) real(t, kind=4),real(zz, kind=4)
+write(32,rec=igrids) real(t, kind=4),real(bb, kind=4)
  !Note, zz is available from a previous call to adapt.
 
 return
