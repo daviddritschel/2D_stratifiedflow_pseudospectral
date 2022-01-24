@@ -59,7 +59,7 @@ call initialise
 
 !>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  !Start the time loop:
-do while (t .le. tsim)
+do while (t < tsim)
 
    !Advect flow from time t to t + dt:
   call advance
@@ -377,7 +377,7 @@ ggmax=sqrt(maxval(fp))
 uumax=sqrt(maxval(uu**2+vv**2))
 
  !Choose new time step:
-dt=min(alpha/(ggmax+small),alpha/(bfmax+small),cflpf/(uumax+small),tgsave/four)
+dt=min(alpha/(ggmax+small),alpha/(bfmax+small),cflpf/(uumax+small),tsim-t)
 
  !Update value of dt/4:
 dt4=dt/four
