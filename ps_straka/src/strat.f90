@@ -59,7 +59,7 @@ call initialise
 
 !>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  !Start the time loop:
-do while (t .le. tsim)
+do while (t < tsim)
 
    !Advect flow from time t to t + dt:
   call advance
@@ -136,10 +136,10 @@ open(22,file='evolution/monitor.asc',status='replace')
 open(23,file='evolution/vorticity.asc',status='replace')
 
  !Open files to save vorticity and buoyancy fields periodically:
-open(31,file='evolution/zz.r8',form='unformatted',access='direct', &
-                 & status='replace',recl=2*nbytes)
-open(32,file='evolution/bb.r8',form='unformatted',access='direct', &
-                 & status='replace',recl=2*nbytes)
+open(31,file='evolution/zz.r4',form='unformatted',access='direct', &
+                 & status='replace',recl=nbytes)
+open(32,file='evolution/bb.r4',form='unformatted',access='direct', &
+                 & status='replace',recl=nbytes)
 
  !Open file for 1d vorticity & buoyancy spectra:
 open(51,file='spectra/zspec.asc',status='replace') ! zeta
@@ -377,7 +377,7 @@ ggmax=sqrt(maxval(fp))
 uumax=sqrt(maxval(uu**2+vv**2))
 
  !Choose new time step:
-dt=min(alpha/(ggmax+small),alpha/(bfmax+small),cflpf/(uumax+small),tgsave/four)
+dt=min(alpha/(ggmax+small),alpha/(bfmax+small),cflpf/(uumax+small),tsim-t)
 
  !Update value of dt/4:
 dt4=dt/four
