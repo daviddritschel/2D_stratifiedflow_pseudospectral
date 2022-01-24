@@ -12,6 +12,9 @@ slug: $(objects) $(sourcedir)/init/slug.f90
 robert: $(objects) $(sourcedir)/init/robert.f90
 	$(f90) parameters.o constants.o $(sourcedir)/init/robert.f90 -o robert $(flags)
 
+straka: $(objects) $(sourcedir)/init/straka.f90
+	$(f90) parameters.o constants.o $(sourcedir)/init/straka.f90 -o straka $(flags)
+
  # Phony definitions:
 .PHONY: init_all
  # Rule for 'make all' in the main make file:
