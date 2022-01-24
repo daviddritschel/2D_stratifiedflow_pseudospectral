@@ -1,11 +1,8 @@
-all:
-	cd straka/src && make all
-	cd robert/src && make all
+robert:
+	cd src && make robert
 
-install:
-	cd straka/src && make install
-	cd robert/src && make install
+straka:
+	cd src && make straka
 
 clean:
-	cd straka/src && make clean
-	cd robert/src && make clean
+	cd src && make clean
