@@ -21,10 +21,13 @@ flags=$(epic_flags)
 
 #----------------------------------------------------------------------
  # Rules:
-all: strat setup proxy_init_all install
+all: strat variance setup proxy_init_all install
 
 strat: $(objects) $(fft_lib) $(sourcedir)/strat.f90
 	$(f90) $(fft_lib) $(objects) $(sourcedir)/strat.f90 -o strat $(flags)
+
+variance: $(objects) $(sourcedir)/variance.f90
+	$(f90) parameters.o constants.o $(sourcedir)/variance.f90 -o variance $(flags)
 
 $(objects): $(fft_lib) $(sources)
 	$(f90) $(fft_lib) $(sources) -c $(flags)

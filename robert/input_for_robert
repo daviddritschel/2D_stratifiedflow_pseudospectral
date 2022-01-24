@@ -1,0 +1,8 @@
+   0.0 300.0 ! centre of warm bubble (m)
+ 150.0 ! inner radius of warm bubble (m)
+  50.0 ! decay length "   "     "     " 
+  0.50 ! temperature anomaly (K)
+  60.0 640.0 ! centre of cold bubble (m)
+   0.0 ! inner radius of cold bubble (m)
+  50.0 ! decay length "   "     "     " 
+ -0.15 ! temperature anomaly (K)
