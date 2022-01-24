@@ -8,7 +8,7 @@ sources = $(sourcedir)/parameters.f90 $(sourcedir)/constants.f90 $(sourcedir)/sp
 objects = parameters.o constants.o spectral.o #Main .o files
 
  # Set location of fft library:
-fft_lib = stafft/stafft.f90 stafft/sta2dfft.f90
+fft_lib = ../../stafft/stafft.f90 ../../stafft/sta2dfft.f90
 
  # Set flag options:
 norm_flags = -O3 -mcmodel=medium #Compiler flags
