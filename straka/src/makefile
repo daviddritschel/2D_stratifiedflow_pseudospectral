@@ -1,7 +1,7 @@
  # Set up source and install directories,
  # these can be edited if the source/install structure needed is different to the standard.
 sourcedir = .
-installdir = ..
+installdir = ../
 
  # Set main source and object files:
 sources = $(sourcedir)/parameters.f90 $(sourcedir)/constants.f90 $(sourcedir)/spectral.f90 #Main f90 sources
