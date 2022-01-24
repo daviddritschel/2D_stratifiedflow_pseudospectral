@@ -1,8 +1,5 @@
-robert:
-	cd src && make robert
-
-straka:
-	cd src && make straka
+all:
+	cd src && make all
 
 clean:
 	cd src && make clean

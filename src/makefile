@@ -1,7 +1,7 @@
  # Set up source and install directories,
  # these can be edited if the source/install structure needed is different to the standard.
 sourcedir = .
-installdir = ..
+installdir = ../bin
 
  # Set main source and object files:
 sources = $(sourcedir)/parameters.f90 $(sourcedir)/constants.f90 $(sourcedir)/spectral.f90 #Main f90 sources
@@ -34,11 +34,13 @@ $(objects): $(fft_lib) $(sources)
 
 .PHONY: clean setup install
 clean:
+	rm -rf $(installdir)/*
 	rm -f *.o *.mod
 setup:
-	test -d $(installdir)/evolution || mkdir $(installdir)/evolution
-	test -d $(installdir)/spectra || mkdir $(installdir)/spectra
+	test -d $(installdir)/evolution || mkdir -p $(installdir)/evolution
+	test -d $(installdir)/spectra || mkdir -p $(installdir)/spectra
 install:
+	mkdir -p $(installdir)
 	find -type f -perm /a+x -exec /bin/mv {} $(installdir)/ \;
 
  # Include intialisation and post-processing rules
