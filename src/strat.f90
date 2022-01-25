@@ -93,14 +93,26 @@ subroutine initialise
 
 implicit none
 
- !Local variable:
+ !Local variables:
 double precision:: qq(0:ny,0:nxm1)
+double precision:: bbdif
 
 !----------------------------------------------------------------------
+ !Read buoyancy and find min/max value for use in determining viscosity:
+open(11,file='bb_init.r8',form='unformatted', &
+    & access='direct',status='old',recl=2*nbytes)
+read(11,rec=1) t,qq
+close(11)
+
+bbdif=maxval(qq)-minval(qq)
+
  !Initialise inversion constants and arrays:
-call init_spectral
+call init_spectral(bbdif)
 
-!----------------------------------------------------------------------
+ !Convert buoyancy (in qq) to spectral space as bs:
+call ptospc_fc(nx,ny,qq,bs,xfactors,yfactors,xtrig,ytrig)
+ !qq is overwritten here.
+
  !Read vorticity and convert to spectral space as zs:
 open(11,file='zz_init.r8',form='unformatted', &
     & access='direct',status='old',recl=2*nbytes)
@@ -108,16 +120,6 @@ read(11,rec=1) t,qq
 close(11)
 
 call ptospc_fc(nx,ny,qq,zs,xfactors,yfactors,xtrig,ytrig)
- !qq is overwritten here.
-
-!----------------------------------------------------------------------
- !Read buoyancy and convert to spectral space as bs:
-open(11,file='bb_init.r8',form='unformatted', &
-    & access='direct',status='old',recl=2*nbytes)
-read(11,rec=1) t,qq
-close(11)
-
-call ptospc_fc(nx,ny,qq,bs,xfactors,yfactors,xtrig,ytrig)
  !qq is overwritten here.
 
 !----------------------------------------------------------------------
@@ -383,13 +385,21 @@ dt=min(alpha/(ggmax+small),alpha/(bfmax+small),cflpf/(uumax+small),tsim-t)
 dt4=dt/four
 
 !---------------------------------------------------------------------
- !Update hyperdiffusion operator used in time stepping:
-dfac=zzch*dt/two
- !zzch is the characteristic vorticity defined above.
-diss=two/(one+dfac*hdis)
- !hdis = C*(K/K_max)^{2p} where K^2 = k_x^2+k_y^2, p is the order,
- !K_max is the maximum x or y wavenumber and C is a dimensionless
- !prefactor (see spectral.f90 and parameters.f90 where C = prediss).
+if (nnu .eq. 1) then
+  !Update diffusion operator used in time stepping:
+  dfac=dt/two
+  diss=two/(one+dfac*hdis)
+   !hdis = nu*(k_x^2+k_y^2) where nu is the viscosity coefficient
+   !(see spectral.f90 and parameters.f90).
+else
+   !Update hyperdiffusion operator used in time stepping:
+  dfac=zzch*dt/two
+   !zzch is the characteristic vorticity defined above.
+  diss=two/(one+dfac*hdis)
+   !hdis = C*(K/K_max)^{2p} where K^2 = k_x^2+k_y^2, p is the order,
+   !K_max is the maximum x or y wavenumber and C is a dimensionless
+   !prefactor (see spectral.f90 and parameters.f90 where C = prediss).
+endif
 
 !---------------------------------------------------------------------
  !Save |u|_max, N_max and gamma_max to monitor.asc:

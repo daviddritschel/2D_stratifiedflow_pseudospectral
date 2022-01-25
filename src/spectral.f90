@@ -17,7 +17,7 @@ integer:: xfactors(5),yfactors(5)
 integer:: kmag(0:nxm1,0:ny),kmax
 
 !====================================================================!
-! From main code: call init_spectral          to initialise          !
+! From main code: call init_spectral(bbdif)   to initialise          !
 ! then            call main_invert(zz,uu,vv)  to perform inversion   !
 !====================================================================!
 
@@ -25,10 +25,13 @@ contains
 
 !=====================================================================
 
-subroutine init_spectral
+subroutine init_spectral(bbdif)
 
  !Declarations:
 implicit none
+
+ !Passed variable (bbdif = max(b) - min(b) at t = 0):
+double precision:: bbdif
 
  !Local variables:
 
@@ -154,20 +157,45 @@ do kx=1,nxm1
 enddo
 
 !---------------------------------------------------------------------
- !Define dissipation operator:
-visc=prediss/max(rkxmax,rkymax)**(2*nnu)
-hdis(0,0)=zero
-do kx=1,nxm1
-  hdis(kx,0)=visc*rkx(kx)**(2*nnu)
-enddo
-do ky=1,ny
-  hdis(0,ky)=visc*rky(ky)**(2*nnu)
-enddo
-do ky=1,ny
+! Damping, viscous or hyperviscous:
+if (nnu .eq. 1) then
+   !Define viscosity:
+  visc=prediss*sqrt(bbdif/rkxmax**3)
+  write(*,'(a,1p,e14.7)') ' Viscosity nu = ',visc
+
+   !Define spectral dissipation operator:
+  hdis(0,0)=zero
   do kx=1,nxm1
-    hdis(kx,ky)=visc*(rkx(kx)**2+rky(ky)**2)**nnu
+    hdis(kx,0)=visc*rkx(kx)**2
   enddo
-enddo
+  do ky=1,ny
+    hdis(0,ky)=visc*rky(ky)**2
+  enddo
+  do ky=1,ny
+    do kx=1,nxm1
+      hdis(kx,ky)=visc*(rkx(kx)**2+rky(ky)**2)
+    enddo
+  enddo
+
+else
+   !Define hyperviscosity:
+  visc=prediss/max(rkxmax,rkymax)**(2*nnu)
+  write(*,'(a,1p,e14.7)') ' Hyperviscosity nu = ',visc
+
+   !Define dissipation operator:
+  hdis(0,0)=zero
+  do kx=1,nxm1
+    hdis(kx,0)=visc*rkx(kx)**(2*nnu)
+  enddo
+  do ky=1,ny
+    hdis(0,ky)=visc*rky(ky)**(2*nnu)
+  enddo
+  do ky=1,ny
+    do kx=1,nxm1
+      hdis(kx,ky)=visc*(rkx(kx)**2+rky(ky)**2)**nnu
+    enddo
+  enddo
+endif
 
 return 
 end subroutine init_spectral
