@@ -15,6 +15,7 @@ import matplotlib.cm as cm
 import matplotlib as mpl
 from matplotlib import rcParams
 from matplotlib import rc
+from ps_config import nx, ny
 rcParams.update({'figure.autolayout': True})
 warnings.simplefilter("ignore",DeprecationWarning)
 
@@ -97,17 +98,7 @@ print()
 t_in = input(' Time to show (default 900)? ')
 t = float(t_in or 900.0)
 
-#-----------------------------------------------------------------
-# Work out grid resolution (ng) by reading it from parameters.f90:
-in_file=open('src/parameters.f90','r')
-fread=in_file.readlines()
-for line in fread:
-   if ':: nx=' in line:
-      pline=line
-
-line=pline.split("=")[1]
-nx=int(line.split(",")[0])
-ny=int(pline.split("=")[2])+1
+ny = ny +1
 
 #-----------------------------------------------------------------
 # Open ene.asc file in one directory to get time between frames:

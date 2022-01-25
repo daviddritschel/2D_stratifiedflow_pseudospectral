@@ -57,6 +57,7 @@ install:
 	cat parameters.f90 | grep -oE ymax=[[:digit:]]*[.]*[[:digit:]]* >> ps_config.py
 	mv ps_config.py $(installdir)
 	cp -r ../scripts/* $(installdir)
+	sed -i "s:PS_SRC_DIR:$(shell pwd):g" $(installdir)/dv
 
 
  # Include intialisation and post-processing rules
