@@ -35,7 +35,6 @@ timestep: $(objects) $(sourcedir)/timestep.f90
 bminmax: $(objects) $(sourcedir)/bminmax.f90
 	$(f90) parameters.o constants.o $(sourcedir)/bminmax.f90 -o bminmax $(flags)
 
-
 $(objects): $(fft_lib) $(sources)
 	$(f90) $(fft_lib) $(sources) -c $(flags)
 
