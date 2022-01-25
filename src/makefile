@@ -56,6 +56,7 @@ install:
 	cat parameters.f90 | grep -oE ymin=[[:digit:]]*[.]*[[:digit:]]* >> ps_config.py
 	cat parameters.f90 | grep -oE ymax=[[:digit:]]*[.]*[[:digit:]]* >> ps_config.py
 	mv ps_config.py $(installdir)
+	cp -r ../scripts/* $(installdir)
 
 
  # Include intialisation and post-processing rules
