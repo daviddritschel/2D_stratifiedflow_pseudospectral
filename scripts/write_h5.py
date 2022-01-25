@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import h5py
 import numpy as np
 import os
@@ -6,16 +8,12 @@ from ps_config import nx, ny, ellx, ymin, ymax
 print(nx, ny, ellx, ymin, ymax)
 exit()
 
-params = {
-    'nx':   256,
-    'ny':   384,
-    'ellx': 1000.0,
-    'ymin': 0.0,
-    'ymax': 1500
-}
-
-nx = int(params['nx'])
-ny = int(params['ny'])
+print("Parameters from parameters.f90:")
+print("nx   = ", nx)
+print("ny   = ", ny)
+print("ellx = ", ellx)
+print("ymin = ", ymin)
+print("ymax = ", ymax)
 
 #-----------------------------------------------------------------
 # Open ene.asc file in one directory to get time between frames:
@@ -36,8 +34,8 @@ h5file = h5py.File('ps_fields.hdf5', 'w')
 h5file.attrs['nsteps'] = nt
 
 box = h5file.create_group('box')
-box.attrs['extent'] = (params['ellx'], params['ymax'] - params['ymin'])
-box.attrs['origin'] = (-params['ellx'] * 0.5, params['ymin'])
+box.attrs['extent'] = (ellx, ymax - ymin)
+box.attrs['origin'] = (-ellx * 0.5, ymin)
 box.attrs['ncells'] = (np.int32(nx), np.int32(ny))
 
 for frame in range(nt):
