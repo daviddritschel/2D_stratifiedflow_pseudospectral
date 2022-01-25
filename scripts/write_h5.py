@@ -5,9 +5,6 @@ import numpy as np
 import os
 from ps_config import nx, ny, ellx, ymin, ymax
 
-print(nx, ny, ellx, ymin, ymax)
-exit()
-
 print("Parameters from parameters.f90:")
 print("nx   = ", nx)
 print("ny   = ", ny)
