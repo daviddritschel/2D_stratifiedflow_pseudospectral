@@ -49,6 +49,14 @@ setup:
 install:
 	mkdir -p $(installdir)
 	find -type f -perm /a+x -exec /bin/mv {} $(installdir)/ \;
+	# extract parameters.f90 values
+	cat parameters.f90 | grep -oE nx=[[:digit:]]* > ps_config.py
+	cat parameters.f90 | grep -oE ny=[[:digit:]]* >> ps_config.py
+	cat parameters.f90 | grep -oE ellx=[[:digit:]]*[.]*[[:digit:]]* >> ps_config.py
+	cat parameters.f90 | grep -oE ymin=[[:digit:]]*[.]*[[:digit:]]* >> ps_config.py
+	cat parameters.f90 | grep -oE ymax=[[:digit:]]*[.]*[[:digit:]]* >> ps_config.py
+	mv ps_config.py $(installdir)
+
 
  # Include intialisation and post-processing rules
  # if these exist:
