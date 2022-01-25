@@ -24,9 +24,9 @@ else
 endif
 
 # Get resolution
-set nx = `grep "nx=" src/parameters.f90 | awk -F= '{print $(NF-1)}' | awk -F, '{print $1}'`
+set nx = `grep "nx=" PS_SRC_DIR/parameters.f90 | awk -F= '{print $(NF-1)}' | awk -F, '{print $1}'`
 
-set ny = `grep "ny=" src/parameters.f90 | awk -F= '{print $(NF)}' | awk -F, '{print $1}'`
+set ny = `grep "ny=" PS_SRC_DIR/parameters.f90 | awk -F= '{print $(NF)}' | awk -F, '{print $1}'`
 
 @ nyp1 = ( $ny + 1 )
 
