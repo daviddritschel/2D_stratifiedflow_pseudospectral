@@ -4,8 +4,9 @@ sourcedir = .
 installdir = ../bin
 
  # Set main source and object files:
-sources = $(sourcedir)/parameters.f90 $(sourcedir)/constants.f90 $(sourcedir)/spectral.f90 #Main f90 sources
-objects = parameters.o constants.o spectral.o #Main .o files
+sources = $(sourcedir)/parameters.f90 $(sourcedir)/constants.f90 $(sourcedir)/timer.f90 $(sourcedir)/spectral.f90
+#Main f90 sources
+objects = parameters.o constants.o timer.o spectral.o #Main .o files
 
  # Set location of fft library:
 fft_lib = stafft/stafft.f90 stafft/sta2dfft.f90
