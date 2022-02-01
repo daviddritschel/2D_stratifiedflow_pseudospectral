@@ -31,6 +31,7 @@ program strat
  !Import contants, parameters and common arrays:
 use constants
 use spectral
+use timer
 
 implicit none
 
@@ -53,11 +54,19 @@ integer:: igrids
  !Logical for use in saving data:
 logical:: gsave
 
+integer :: ps_timer, advance_timer
+
+call register_timer('ps', ps_timer)
+call register_timer('advance', advance_timer)
+
+call start_timer(ps_timer)
+
 !---------------------------------------------------------
  !Define fixed arrays and constants and read initial data:
 call initialise
 
 !>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+call start_timer(advance_timer)
  !Start the time loop:
 do while (t < tsim)
 
@@ -65,6 +74,7 @@ do while (t < tsim)
   call advance
 
 enddo
+call stop_timer(advance_timer)
 !End of time loop
 !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -78,6 +88,9 @@ endif
  !Close all files:
 call finalise
 
+call stop_timer(ps_timer)
+
+call print_timer
 
  !Internal subroutine definitions (inherit global variables):
 !::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
